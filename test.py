@@ -15,7 +15,7 @@ def set_static_ip():
 
     # Write network interfaces configuration to the file
     with open(interfaces_file_path, 'w') as interfaces_file:
-        interfaces_file.write(f"auto wlp1s0\n")
+        interfaces_file.write(f"auto eth0\n")
         interfaces_file.write(f"iface eth0 inet static\n")
         interfaces_file.write(f"address {ip_address}\n")
         interfaces_file.write(f"netmask {netmask}\n")
@@ -23,8 +23,12 @@ def set_static_ip():
         for dns in dns_servers.split():
             interfaces_file.write(f"dns-nameservers {dns}\n")
 
+    # Reboot the system to apply the changes
+    os.system("sudo reboot")
+
 if __name__ == "__main__":
     set_static_ip()
+    
 
 
 # Enter the static IP address: 192.168.1.117
